@@ -81,10 +81,22 @@ try:
     print("\n--- Verification of the output ---")
     # Load the saved file back to verify its contents
     verified_df = pd.read_pickle(output_filename)
+    
+    # **UPDATED VERIFICATION STEP**
+    # Display columns relevant to the new asthma dataset to confirm correctness.
+    # This shows the original patient ID and a key symptom alongside our new processed columns.
+    verification_columns = [
+        'PatientID',
+        'Wheezing', 
+        'report_text', 
+        'processed_report', 
+        'embedding'
+    ]
     print("Sample of the final data:")
-    print(verified_df[['report_text', 'processed_report', 'embedding']].head())
+    print(verified_df[verification_columns].head())
     print("\nShape of the first embedding vector:", verified_df['embedding'].iloc[0].shape)
     
 except FileNotFoundError:
     print(f"Error: The input file '{input_filename}' was not found.")
     print("Please make sure you have successfully run the Phase 1 script first.")
+
