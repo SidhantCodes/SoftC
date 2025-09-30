@@ -143,7 +143,9 @@ class SymptomPredictor:
             fis_sim.input['symptom_severity'] = severity_score
             fis_sim.compute()
             risk_score = fis_sim.output['risk']
-            risk_terms = self.fis_control.consequents[0].terms
+            # **FIX APPLIED HERE**
+            # Convert the consequents generator to a list before accessing it
+            risk_terms = list(self.fis_control.consequents)[0].terms
             explanation_level = max(risk_terms, key=lambda term: fuzz.interp_membership(risk_terms[term].parent.universe, risk_terms[term].mf, risk_score))
             explanation = f"Risk is '{explanation_level.upper()}' due to PEF reading and symptom severity."
         
